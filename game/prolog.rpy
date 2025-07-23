@@ -1,10 +1,40 @@
 image preot_lumanare = "Priest holding candle.png"
+image butoi_vin =im.Scale("barrel.png", 100, 200)
+
+default butoaie = 0
+
+init python:
+    import random
+    def afiseaza_random_nr_butoaie():
+        return random.randint(0, 4)
+
+    def colecteaza_butoi():
+        globals()['butoaie'] += 1
+        renpy.hide_screen("butoi")
+        return
+
+screen butoi(x, y):
+    imagebutton:
+        xalign 0.5
+        yalign 0.5
+        idle "butoi_vin"
+        action Function(colecteaza_butoi)
+
+screen numarator_butoaie():
+    frame:
+        xalign 0.5
+        yalign 0.1
+        vbox:
+            text "butoaie: [butoaie] "
+
+
 
 label awakening:
     scene house
     show preot at Position(xpos=900, ypos=1500) with fade
-
-    preot "Maria, Ion, veniti la masa!"
+    show screen butoi(540, 960)
+    show screen numarator_butoaie
+    preot "Maria, Ion, veniti la masa! Avem doar [butoaie] butoaie ramase"
 
     hide preot
 
@@ -32,7 +62,7 @@ label check_the_corridor:
     
     show preot_lumanare at Position(xpos=900, ypos=1500, zorder=2) with fade
 
-    preot "Maria! Ion!"
+    preot "Maria! Ion! [butoaie] BUTOAIE"
 
     "Cu cat Boris se adancea in casa, cu atat devenea mai intunecata privelistea"
 

@@ -3,31 +3,60 @@
 # Declare characters used by this game. The color argument colorizes the
 # name of the character.
 
-define e = Character("Eileen")
+
+define preot = Character(name="Boris", color="#cc1111")
+image preot = "Priest.png"
+image house = im.Scale("house.png", 1920, 1080)
+
+default butelii_de_vin = 0
 
 
 # The game starts here.
 
 label start:
+    jump awakening
 
-    # Show a background. This uses a placeholder by default, but you can
-    # add a file (named either "bg room.png" or "bg room.jpg") to the
-    # images directory to show it.
+    scene house
+    show preot at Position(xpos=900, ypos=1500) with fade
 
-    scene bg room
+    preot "Maria, Ion, veniti la masa! Au mai ramas doar [butelii_de_vin] butelii de vin"
 
-    # This shows a character sprite. A placeholder is used, but you can
-    # replace it by adding a file named "eileen happy.png" to the images
-    # directory.
+    hide preot with Dissolve(10.0)
 
-    show eileen happy
+    menu:
+        "Mai cauta prin casa":
+            $ butelii_de_vin = 2
+        "Iese afara":
+            "Boris iesi pe usa, fara sa mai astepte o clipa"
 
-    # These display lines of dialogue.
+    "Boris nu auzi nimic ca raspuns"
 
-    e "You've created a new Ren'Py game."
+    jump looking_for_siblings
 
-    e "Once you add a story, pictures, and music, you can release it to the world!"
+    "Unde ar putea sa fie?"
 
-    # This ends the game.
+    return
+
+
+label looking_for_siblings:
+
+    scene village landscape
+
+    show preot at Position(xpos=900, ypos=1500) with fade
+
+    while butelii_de_vin < 10:
+        preot "Ion! Maria! Am mai gasit [butelii_de_vin]! Hai veniti!"
+        $ butelii_de_vin += 2
+
+    $ mancaruri = ["placinte", "cartofi", "croissante"]
+    $ mancare = 0
+
+    while mancare <  len(mancaruri):
+        preot "Hai veniti ca am gatit [mancaruri[mancare]]"
+        $ mancare += 1
+    
+    preot "Unde sunteti?"
+    
+    jump looking_for_siblings
 
     return
