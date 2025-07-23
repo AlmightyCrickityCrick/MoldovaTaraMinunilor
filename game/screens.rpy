@@ -298,6 +298,8 @@ screen navigation():
 
             textbutton _("Start") action Start()
 
+            textbutton _("Minigame") action Start("minigame")
+
         else:
 
             textbutton _("History") action ShowMenu("history")
